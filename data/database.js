@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
 
-const dbDir = path.join(__dirname, '../data');
+const dbDir = __dirname;
 const dbPath = path.join(dbDir, 'todos.db');
 
 // Ensure data directory exists
