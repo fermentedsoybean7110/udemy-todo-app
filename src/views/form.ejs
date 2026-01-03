@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= todo ? 'ToDo 編集' : '新規 ToDo 作成' %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1><%= todo ? 'ToDo 編集' : '新規 ToDo 作成' %></h1>
+    
+    <form action="<%= action %>" method="<%= method %>" class="todo-form">
+      <div class="form-group">
+        <label for="title">タイトル <span class="required">*</span></label>
+        <input type="text" id="title" name="title" value="<%= todo ? todo.title : '' %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="content">内容</label>
+        <textarea id="content" name="content" rows="5"><%= todo ? (todo.content || '') : '' %></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="deadline">期限</label>
+        <input type="date" id="deadline" name="deadline" value="<%= todo ? (todo.deadline || '') : '' %>">
+      </div>
+
+      <div class="form-group">
+        <label for="priority">優先度</label>
+        <select id="priority" name="priority">
+          <option value="low" <%= todo && todo.priority === 'low' ? 'selected' : '' %>>低</option>
+          <option value="medium" <%= !todo || todo.priority === 'medium' ? 'selected' : '' %>>中</option>
+          <option value="high" <%= todo && todo.priority === 'high' ? 'selected' : '' %>>高</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary"><%= todo ? '更新' : '作成' %></button>
+        <a href="/" class="btn btn-secondary">キャンセル</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
