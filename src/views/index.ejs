@@ -12,6 +12,16 @@
     
     <div class="actions">
       <a href="/todos/new" class="btn btn-primary">新規作成</a>
+      
+      <div class="filter-section">
+        <label for="priority-filter">優先度でフィルター:</label>
+        <select id="priority-filter" onchange="filterByPriority(this.value)">
+          <option value="all">すべて</option>
+          <option value="high">高</option>
+          <option value="medium">中</option>
+          <option value="low">低</option>
+        </select>
+      </div>
     </div>
 
     <% if (todos.length === 0) { %>
@@ -50,5 +60,23 @@
       </table>
     <% } %>
   </div>
+
+  <script>
+    function filterByPriority(priority) {
+      const rows = document.querySelectorAll('.todo-table tbody tr');
+      
+      rows.forEach(row => {
+        if (priority === 'all') {
+          row.style.display = '';
+        } else {
+          if (row.classList.contains('priority-' + priority)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        }
+      });
+    }
+  </script>
 </body>
 </html>
