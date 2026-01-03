@@ -5,7 +5,19 @@ class TodoController {
   async index(req, res) {
     const db = getDatabase();
     
-    db.all('SELECT * FROM todos ORDER BY deadline ASC, priority DESC', [], (err, rows) => {
+    const sql = `
+      SELECT * FROM todos 
+      ORDER BY 
+        CASE priority 
+          WHEN 'high' THEN 1 
+          WHEN 'medium' THEN 2 
+          WHEN 'low' THEN 3 
+          ELSE 4 
+        END,
+        deadline ASC
+    `;
+    
+    db.all(sql, [], (err, rows) => {
       if (err) {
         console.error(err.message);
         res.status(500).send('データベースエラー');
