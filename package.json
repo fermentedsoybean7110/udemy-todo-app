@@ -1,0 +1,18 @@
+{
+  "name": "udemy-todo-app",
+  "version": "1.0.0",
+  "description": "ToDo management web application",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "keywords": ["todo", "express", "sqlite"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "sqlite3": "^5.1.6",
+    "body-parser": "^1.20.2"
+  }
+}
