@@ -236,6 +236,15 @@ h1 {
   display: none !important;
 }
 
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* レスポンシブ */
 @media (max-width: 768px) {
   .container {
