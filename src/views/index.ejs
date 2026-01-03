@@ -10,23 +10,27 @@
   <div class="container">
     <h1>ToDo リスト</h1>
     
-    <div class="actions">
-      <a href="/todos/new" class="btn btn-primary">新規作成</a>
-      
-      <div class="filter-section">
-        <label for="priority-filter">優先度でフィルター:</label>
-        <select id="priority-filter" onchange="filterByPriority(this.value)">
-          <option value="all">すべて</option>
-          <option value="high">高</option>
-          <option value="medium">中</option>
-          <option value="low">低</option>
-        </select>
-      </div>
-    </div>
-
     <% if (todos.length === 0) { %>
+      <div class="actions">
+        <a href="/todos/new" class="btn btn-primary">新規作成</a>
+      </div>
       <p class="no-todos">ToDoがありません。新規作成してください。</p>
     <% } else { %>
+      <div class="actions">
+        <a href="/todos/new" class="btn btn-primary">新規作成</a>
+        
+        <div class="filter-section">
+          <label for="priority-filter">優先度でフィルター:</label>
+          <select id="priority-filter" aria-label="優先度でToDoをフィルター" onchange="filterByPriority(this.value)">
+            <option value="all">すべて</option>
+            <option value="high">高</option>
+            <option value="medium">中</option>
+            <option value="low">低</option>
+          </select>
+        </div>
+      </div>
+      
+      <div id="filter-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
       <table class="todo-table">
         <thead>
           <tr>
@@ -64,18 +68,34 @@
   <script>
     function filterByPriority(priority) {
       const rows = document.querySelectorAll('.todo-table tbody tr');
+      const priorityNames = {
+        'all': 'すべて',
+        'high': '高',
+        'medium': '中',
+        'low': '低'
+      };
+      let visibleCount = 0;
       
       rows.forEach(row => {
         if (priority === 'all') {
-          row.style.display = '';
+          row.classList.remove('hidden');
+          visibleCount++;
         } else {
           if (row.classList.contains('priority-' + priority)) {
-            row.style.display = '';
+            row.classList.remove('hidden');
+            visibleCount++;
           } else {
-            row.style.display = 'none';
+            row.classList.add('hidden');
           }
         }
       });
+      
+      // Update aria-live region for screen readers
+      const statusElement = document.getElementById('filter-status');
+      if (statusElement) {
+        const priorityText = priorityNames[priority];
+        statusElement.textContent = `${priorityText}の優先度でフィルターされました。${visibleCount}件のToDoが表示されています。`;
+      }
     }
   </script>
 </body>
